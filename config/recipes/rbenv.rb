@@ -7,11 +7,11 @@ namespace :rbenv do
     run "#{sudo} apt-get -y -qq install curl git-core"
     run "curl -L https://raw.github.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash"
     bashrc = <<-BASHRC
-if [ -d $HOME/.rbenv ]; then
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-fi
-BASHRC
+    if [ -d $HOME/.rbenv ]; then
+      export PATH="$HOME/.rbenv/bin:$PATH"
+      eval "$(rbenv init -)"
+    fi
+    BASHRC
     put bashrc, "/tmp/rbenvrc"
     run "cat /tmp/rbenvrc ~/.bashrc > ~/.bashrc.tmp"
     run "mv ~/.bashrc.tmp ~/.bashrc"

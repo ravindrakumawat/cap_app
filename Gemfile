@@ -33,6 +33,6 @@ gem 'jquery-rails'
 
 # Deploy with Capistrano
  gem 'capistrano'
-
+ gem 'foreman', github: "asanghi/foreman"
 # To use debugger
 # gem 'debugger'

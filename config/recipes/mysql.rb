@@ -7,7 +7,7 @@
 set_default(:mysql_host, "127.0.0.1")
 set_default(:mysql_user) { "root" }
 set_default(:mysql_password) { Capistrano::CLI.password_prompt "! MySQL root password: " }
-set_default(:mysql_database) { "#{application}_#{stage}" }
+set_default(:mysql_database) { "#{application}_#{rails_env}" }
 
 namespace :mysql do
 

@@ -3,6 +3,12 @@ upstream unicorn<%= application %> {
 }
 
 server {
+  listen 80<%= is_default ? " default deferred" : "" %>;
+  <% if setup_ssl %>
+    listen 443 ssl<%= is_default ? " default deferred" : "" %>;
+    ssl_certificate <%= shared_path %>/<%= ssl_cert %>;
+    ssl_certificate_key <%= shared_path %>/<%= ssl_cert_key %>;
+  <% end %>
   root <%= current_path %>/public;
 
   location ~ ^/assets/ {
