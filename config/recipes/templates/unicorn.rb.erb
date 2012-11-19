@@ -1,0 +1,27 @@
+working_directory "<%= current_path %>"
+pid "<%= unicorn_pid %>"
+stderr_path "<%= unicorn_log %>"
+stdout_path "<%= unicorn_log %>"
+
+listen "/tmp/unicorn.<%= application %>.sock"
+worker_processes <%= unicorn_workers %>
+timeout 30
+
+# Taken from Dalli gem's documentation
+after_fork do |server, worker|
+  if defined?(ActiveSupport::Cache::DalliStore) && Rails.cache.is_a?(ActiveSupport::Cache::DalliStore)
+    # Reset Rails's object cache
+    # Only works with DalliStore
+    Rails.cache.reset
+    # Reset Rails's session store
+    # If you know a cleaner way to find the session store instance, please let me know
+    ObjectSpace.each_object(ActionDispatch::Session::DalliStore) { |obj| obj.reset }
+  end
+
+  if defined?(Sidekiq)
+    Sidekiq.configure_client do |config|
+      config.redis = { :size => 1, :namespace => '<%= application %>' }
+    end
+  end
+
+end
