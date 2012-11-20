@@ -4,7 +4,7 @@
 # mysql:create_database - creates DB in mysql console
 # mysql:symlink - on deploy creates symlink from #{current_path} to #{shared_path}
 
-set_default(:mysql_host, "127.0.0.1")
+set_default(:mysql_host, "localhost")
 set_default(:mysql_user) { "root" }
 set_default(:mysql_password) { Capistrano::CLI.password_prompt "! MySQL root password: " }
 set_default(:mysql_database) { "#{application}_#{rails_env}" }

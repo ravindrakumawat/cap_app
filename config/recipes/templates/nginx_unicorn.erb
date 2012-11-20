@@ -11,6 +11,22 @@ server {
   <% end %>
   root <%= current_path %>/public;
 
+  # Prevent attack from bots trying to access setup.php and other non-existing php stuff
+  # Aditya 23rd July 2011: Added after scanning rails log for routing errors.
+  # We just need to ensure that none of our own URLS end in .php
+
+  location ~* \.php$ {
+    internal;
+  }
+  # Prevention of lots of Blog scoping attacks from China
+  location ~* (blogs|add-blog) {
+    internal;
+  }
+  # Block access to paths containing .svn
+  location ~* ^.*\.svn.*$ {
+    internal;
+  }
+
   location ~ ^/assets/ {
     gzip_static on;
     expires max;
